@@ -1,9 +1,9 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:portfolio/utils/styling.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -130,15 +130,16 @@ class HomePage extends StatelessWidget {
                 children: [
                   ///details..
                   SizedBox(
-                      width: MediaQuery.of(context).size.width*0.6,
+                      width: MediaQuery.of(context).size.width*0.65,
                       child: details()),
                   ///profile image..
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     height: MediaQuery.of(context).size.height*0.7,
                     decoration: const BoxDecoration(
+                      //color: Colors.red,
                       image: DecorationImage(
-                            image: AssetImage("assets/image/me.png"),fit: BoxFit.contain,),
+                        image: AssetImage("assets/image/me.png"),fit: BoxFit.contain,),
                     ),
                   ),
                 ],
@@ -201,7 +202,6 @@ class HomePage extends StatelessWidget {
       ):Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: ListView(
-
           children: [
             ///profile image..
             Container(
@@ -218,10 +218,10 @@ class HomePage extends StatelessWidget {
             details(),
             const SizedBox(height: 40,),
             ///Training..
-            const SizedBox(
+             SizedBox(
               height: 45,
               child: FittedBox(
-                  child: Text("Training",textAlign: TextAlign.center,style: TextStyle(fontSize: 28,fontWeight: FontWeight.bold),)),
+                  child: Text("Training",textAlign: TextAlign.center,style: myTextStyle28(),)),
             ),
             const SizedBox(height: 10,),
             SizedBox(
@@ -276,26 +276,36 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ///name..
-        const SizedBox(
+         SizedBox(
             height: 70,
-            child: FittedBox(
-                child: Text(
-                  "Hi, I’m Saurav Patel",
-                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-                ))),
+            child: Row(
+              children: [
+                Text("Hi,",style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Mont'),),
+                AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    animatedTexts: [
+                  TyperAnimatedText('I’m Saurav Patel',speed: Duration(milliseconds: 200),textStyle:TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: "Antic"),curve: Curves.linear )
+                ])
+                /*FittedBox(
+                    child: Text(
+                      "I’m Saurav Patel",
+                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    )),*/
+              ],
+            )),
         ///designation..
-        const SizedBox(
-            height: 60,
+         SizedBox(
+            height: 65,
             child: FittedBox(
-                child: Text(
-                  "Flutter Developer",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ))),
+                child: Text("Flutter Developer", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900,fontFamily: "Antic")))),
         ///about me..
-        Text(
-          "A passionate Flutter developer and a BCA graduate from SEMCOM College. With hands-on experience in building user-friendly mobile applications and expertise in Flutter, Dart, and state management, I specialize in creating scalable and efficient apps.I’m eager to contribute to innovative projects and continually grow as a web and mobile app developer."
-          ,textAlign: TextAlign.justify, style: myTextStyle18(myFontweight: FontWeight.bold),
-        ),
+        AnimatedTextKit(
+            isRepeatingAnimation: false,
+            animatedTexts: [
+          TypewriterAnimatedText("A passionate Flutter developer and a BCA graduate from SEMCOM College. With hands-on experience in building user-friendly mobile applications and expertise in Flutter, Dart, and state management, I specialize in creating scalable and efficient apps.I’m eager to contribute to innovative projects and continually grow as a web and mobile app developer."
+            ,textAlign: TextAlign.justify, textStyle: myTextStyle18(myFontweight: FontWeight.bold),)
+        ]),
+        SizedBox(height: 10,),
         ///social links..
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -312,6 +322,7 @@ class HomePage extends StatelessWidget {
               }),
               const SizedBox(width: 80,),
               socialLinksBtn(socialImage: const AssetImage("assets/icons/download.png"), socialMediaName: "Resume",callback: (){
+                launchURL("https://drive.google.com/file/d/1sX0sL0qAx_QzQ-hb8zct8uzgQnBt0FPr/view?usp=drive_link");
                 print("Clicked on CV");
               }),
             ],
@@ -324,7 +335,7 @@ class HomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Flutter App Development Training",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+         Text("Flutter App Development Training",style: myTextStyle25(myFontweight: FontWeight.w900),),
         const SizedBox(height: 10,),
         RichText(text: TextSpan(
             children: [
@@ -383,7 +394,7 @@ class HomePage extends StatelessWidget {
     return GridView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 450,mainAxisExtent: MediaQuery.of(context).size.height*.53,mainAxisSpacing: 12,crossAxisSpacing: 12),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 450,mainAxisExtent: MediaQuery.of(context).size.height*.58,mainAxisSpacing: 12,crossAxisSpacing: 12),
       children: projects.map((eachProject) {
         return Container(
           decoration: BoxDecoration(
@@ -405,13 +416,29 @@ class HomePage extends StatelessWidget {
                 child: Text(eachProject['projectDescription'],maxLines: 4,overflow: TextOverflow.ellipsis,style: myTextStyle15(myFontweight: FontWeight.normal),),
               ),
               const SizedBox(height: 10,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: OutlinedButton(onPressed: (){
-                  launchURL(eachProject['projectLink']);
-                }, child: Text("Show Project",style: myTextStyle15(myFontweight: FontWeight.bold),),style: OutlinedButton.styleFrom(minimumSize: Size(MediaQuery.of(context).size.width, 45),backgroundColor: Colors.black,foregroundColor: Colors.white,)
+              Card(
+                elevation: 12,
+                color: Colors.deepPurple,
+                child: AnimatedButton(
+
+                  animationDuration: Duration(seconds: 1),
+                  onPress: (){
+                    launchURL(eachProject['projectLink']);
+                  },
+                  height: 45,
+                  text: 'Show Project',
+
+                  selectedTextColor: Colors.black,
+                  backgroundColor: Colors.black,
+                  animatedOn: AnimatedOn.onHover,
+                  isReverse: true,
+
+                  transitionType: TransitionType.CENTER_ROUNDER,
+                  textStyle: myTextStyle15(myFontweight: FontWeight.bold,color: Colors.white),
                 ),
-              )],
+              )
+
+            ],
           ),
         ) ;
       },).toList(),
@@ -432,7 +459,7 @@ class HomePage extends StatelessWidget {
               backgroundImage:socialImage ,
             ),
           ),
-          Text(socialMediaName,style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)
+          Text(socialMediaName,style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold,fontFamily: "Antic"),)
         ],
       ),
     );
