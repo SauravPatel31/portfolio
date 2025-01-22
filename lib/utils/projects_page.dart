@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
+
 import 'package:portfolio/utils/custome_widget.dart';
 import 'package:portfolio/utils/styling.dart';
 
@@ -7,7 +7,7 @@ class ProjectCardWidget extends StatefulWidget {
   final BuildContext context;
   final VoidCallback? callbackAction;
 
-  const ProjectCardWidget({
+  ProjectCardWidget({
     required this.context,
     this.callbackAction,
     Key? key,
@@ -24,8 +24,10 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
   @override
   Widget build(BuildContext context) {
     // Determine visible projects
-    final List<Map<String, dynamic>> visibleProjects = showAllProjects ? CustomeWidget().projects : CustomeWidget().projects.take(3).toList(); // Initially display only 3 cards
+    final List<Map<String, dynamic>> visibleProjects = showAllProjects ? CustomeWidget().projects : CustomeWidget().projects.take(4).toList(); // Initially display only 3 cards
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AnimatedSize(
           duration: const Duration(milliseconds: 500),
@@ -40,62 +42,80 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
               crossAxisSpacing: 12,
             ),
             children: visibleProjects.map((eachProject) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: eachProject['color'],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(10)),
-                      child: Image(
-                        image: AssetImage(eachProject['projectImage']),
-                        height: MediaQuery.of(context).size.height * 0.28,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        eachProject['projectName'],
-                        style: myTextStyle18(),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        eachProject['projectDescription'],
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                        style: myTextStyle15(myFontweight: FontWeight.normal),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Card(
-                      elevation: 12,
-                      color: Colors.deepPurple,
-                      child: AnimatedButton(
-                        animationDuration: const Duration(seconds: 1),
-                        onPress: () {
-                          CustomeWidget().launchURL(eachProject['projectLink']);
-                        },
-                        height: 45,
-                        text: 'Show Project',
-                        selectedTextColor: Colors.black,
-                        backgroundColor: Colors.black,
-                        animatedOn: AnimatedOn.onHover,
-                        isReverse: true,
-                        transitionType: TransitionType.CENTER_ROUNDER,
-                        textStyle: myTextStyle15(
-                          myFontweight: FontWeight.bold,
-                          color: Colors.white,
+              return Card(
+                elevation: 10,
+                shadowColor:eachProject['color'],
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      ///Project Image
+                      ClipRRect(
+                        borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(10)),
+                        child: Image(
+                          image: AssetImage(eachProject['projectImage']),
+                          height: MediaQuery.of(context).size.height * 0.28,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                  ],
+                      ///Project Name
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          eachProject['projectName'],
+                          style: myTextStyle18(myFontweight: FontWeight.bold),
+                        ),
+                      ),
+                      ///Project Description
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          eachProject['projectDescription'],
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          style: myTextStyle15(myFontweight: FontWeight.normal),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ///GitHub Button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: InkWell(
+                          onTap:(){
+                            CustomeWidget().launchURL(eachProject['projectLink']);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: eachProject['color'],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: eachProject['color'],
+                                  spreadRadius: 2,
+                                  blurRadius: 5,)
+                              ],
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomRight: Radius.circular(15))
+
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing:10,
+                              children: [
+                                Image(image: AssetImage("assets/icons/github-removebg-preview.png"),height: 25,width: 25,),
+                                Text("GitHub",style: myTextStyle15(color: Colors.white,myFontweight: FontWeight.bold),),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }).toList(),
@@ -103,23 +123,16 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
         ),
         const SizedBox(height: 16),
         if (!showAllProjects && CustomeWidget().projects.length > 3) // Show button only if more projects exist
-          ElevatedButton(
+          TextButton(
             onPressed: () {
               setState(() {
                 showAllProjects = true; // Trigger animation to expand
               });
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
             child: Text(
               'Show More',
               style: myTextStyle15(
-                color: Colors.white,
+
                 myFontweight: FontWeight.bold,
               ),
             ),
@@ -128,3 +141,7 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
     );
   }
 }
+/*
+onPress: () {
+CustomeWidget().launchURL(eachProject['projectLink']);
+},*/

@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -36,7 +37,7 @@ class CustomeWidget {
     {
       'skillName':'Bloc',
       'skillImg':'assets/icons/skill/bloc-logo.png',
-      'skillPer':'75%',
+      'skillPer':'82%',
       'color':Colors.blue.shade900
     },
     {
@@ -44,6 +45,13 @@ class CustomeWidget {
       'skillImg':'assets/icons/skill/provider.png',
       'skillPer':'72%',
       'color':Colors.black
+
+    },
+    {
+      'skillName':'GetX',
+      'skillImg':'assets/icons/skill/getx_icons.png',
+      'skillPer':'78%',
+      'color':Colors.deepPurple
 
     },
     {
@@ -95,20 +103,21 @@ class CustomeWidget {
     },
     {
       'projectName':'BMI Calculator',
-      'projectDescription':"E-Commerce App orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-      'projectImage':'assets/image/b.jpg',
-      'color':Colors.blueAccent,
-      'projectLink':'https://github.com/SauravPatel31/expense_app'
+      'projectDescription':"A modern mobile app to calculate Body Mass Index (BMI) based on user input. It features a clean UI, real-time calculations, categorized BMI results, and cross-platform compatibility for Android and iOS. This project highlights my skills in Flutter and Dart for building intuitive and responsive applications.",
+      'projectImage':'assets/image/projects/BMI.png',
+      'color':Colors.green,
+      'projectLink':'https://github.com/SauravPatel31/bmi_calculator-'
     },
     {
       'projectName':'Tip Calculator',
-      'projectDescription':"E-Commerce App orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy ",
-      'projectImage':'assets/image/b.jpg',
-      'color':Colors.blueAccent,
-      'projectLink':'https://github.com/SauravPatel31/expense_app'
+      'projectDescription':"A sleek and simple Flutter app designed to make tip calculation and bill splitting quick, easy, and accurate. Built with Dart, this app ensures you’ll never overpay or underpay—at the dinner table again! ",
+      'projectImage':'assets/image/projects/tip_calculator.png',
+      'color':Colors.teal,
+      'projectLink':'https://github.com/SauravPatel31/tip-calculator-'
     },
 
   ];
+  ///name and designation and about me and social links..
   Widget details(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,23 +152,23 @@ class CustomeWidget {
               TypewriterAnimatedText("A passionate Flutter developer and a BCA graduate from SEMCOM College. With hands-on experience in building user-friendly mobile applications and expertise in Flutter, Dart, and state management, I specialize in creating scalable and efficient apps.I’m eager to contribute to innovative projects and continually grow as a web and mobile app developer."
                 ,textAlign: TextAlign.justify, textStyle: myTextStyle18(myFontweight: FontWeight.bold),)
             ]),
-        SizedBox(height: 10,),
+        SizedBox(height: 30,),
         ///social links..
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              socialLinksBtn(socialImage: const AssetImage("assets/icons/linkedin.png"), socialMediaName: "Linkedin",callback:(){
+              socialLinksBtn(socialImage: const AssetImage("assets/icons/linkedin-removebg-preview.png"), socialMediaName: "Linkedin",callback:(){
                 launchURL("https://www.linkedin.com/in/saurav-patel-783276294/");
               },),
               const SizedBox(width: 80,),
-              socialLinksBtn(socialImage: const AssetImage("assets/icons/github.png"), socialMediaName: "Github",callback: (){
+              socialLinksBtn(socialImage: const AssetImage("assets/icons/github-removebg-preview.png"), socialMediaName: "Github",callback: (){
                 launchURL("https://github.com/SauravPatel31");
                 print("Clicked on Github");
               }),
               const SizedBox(width: 80,),
-              socialLinksBtn(socialImage: const AssetImage("assets/icons/download.png"), socialMediaName: "Resume",callback: (){
+              socialLinksBtn(socialImage: const AssetImage("assets/icons/download-removebg-preview.png"), socialMediaName: "Resume",callback: (){
                 launchURL("https://drive.google.com/file/d/1sX0sL0qAx_QzQ-hb8zct8uzgQnBt0FPr/view?usp=drive_link");
                 print("Clicked on CV");
               }),
@@ -169,6 +178,7 @@ class CustomeWidget {
       ],
     );
   }
+  ///my training details or experience..
   Widget trainingDetails(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,6 +209,7 @@ class CustomeWidget {
       ],
     );
   }
+  ///skills details..
   Widget skillsDetails(){
     return Wrap(
       alignment: WrapAlignment.spaceEvenly,
@@ -228,6 +239,7 @@ class CustomeWidget {
       },).toList(),
     );
   }
+  ///projects details..
   Widget projectCard({required context,VoidCallback? callbackAction}){
     return GridView(
       shrinkWrap: true,
@@ -283,15 +295,18 @@ class CustomeWidget {
 
     );
   }
+  ///social links..
   Widget socialLinksBtn({required ImageProvider socialImage,required String socialMediaName,VoidCallback? callback}){
     return  InkWell(
       onTap:callback,
       child: Column(
         children: [
-          Card(
-            shadowColor: Colors.blue,
-            elevation: 11,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+          AvatarGlow(
+            startDelay: const Duration(milliseconds: 1000),
+            glowColor: Colors.cyan,
+            glowRadiusFactor: 0.5,
+            curve: Curves.bounceOut,
+            duration: Duration(seconds: 4),
             child: CircleAvatar(
               radius: 25,
               backgroundImage:socialImage ,

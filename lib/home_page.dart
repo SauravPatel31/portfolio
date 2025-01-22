@@ -37,15 +37,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MediaQuery.of(context).orientation == Orientation.landscape
-          ? _buildLandscapeLayout()
-          : _buildPortraitLayout(),
+        //backgroundColor:Colors.black,
+      backgroundColor: Color(0xffFDFDFD),
+      body: MediaQuery.of(context).orientation == Orientation.landscape ? _buildLandscapeLayout() : _buildPortraitLayout(),
+
     );
   }
 
+  /// Landscape layout
   Widget _buildLandscapeLayout() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal:12 ),
       child: ListView(
         children: [
           /// Profile image and details
@@ -118,6 +120,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
+  /// Portrait Layout
   Widget _buildPortraitLayout() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -168,6 +171,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
+  ///Animation
   Widget _buildSectionHeader(String title) {
     return SlideTransition(
       position: Tween<Offset>(

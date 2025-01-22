@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class BtnPage extends StatefulWidget {
@@ -17,6 +18,20 @@ class _BtnPageState extends State<BtnPage> {
       ),
       body: Column(
         children: [
+          Container(
+            width: 250,
+            height: 250 ,
+          ),
+          ElevatedButton(
+            onPressed: (){
+              Get.changeTheme(ThemeData.dark());
+              Get.changeTheme(Get.isDarkMode? ThemeData.light(): ThemeData.dark());
+              setState(() {
+
+              });
+            },
+            child: Text("Dark Theme"),
+          )
 
 
         ],
