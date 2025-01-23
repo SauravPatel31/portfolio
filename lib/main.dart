@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:portfolio/btn_page.dart';
+import 'package:portfolio/home_page.dart';
+import 'package:portfolio/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    context.read<ThemeProvider>().getPrefValue();
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Saurav Patel',
-      home: BtnPage(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      themeMode:  context.watch<ThemeProvider>().getThemeValue()?ThemeMode.light:ThemeMode.dark,
+      home: HomePage(),
     );
   }
 }

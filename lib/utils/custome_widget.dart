@@ -3,10 +3,13 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+
 import 'package:portfolio/utils/styling.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
-class CustomeWidget {
+class CustomWidget {
+
   void launchURL(String url)async{
     Uri uri = Uri.parse(url);
     if(await canLaunchUrl(uri)){
@@ -44,7 +47,7 @@ class CustomeWidget {
       'skillName':'Provider',
       'skillImg':'assets/icons/skill/provider.png',
       'skillPer':'72%',
-      'color':Colors.black
+      'color':Colors.black54
 
     },
     {
@@ -118,26 +121,24 @@ class CustomeWidget {
 
   ];
   ///name and designation and about me and social links..
-  Widget details(){
+  Widget details(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ///name..
         SizedBox(
-            height: 70,
+            height: MediaQuery.of(context).size.height * 0.099,
             child: Row(
               children: [
                 Text("Hi,",style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Mont'),),
-                AnimatedTextKit(
-                    isRepeatingAnimation: false,
-                    animatedTexts: [
-                      TyperAnimatedText('I’m Saurav Patel',speed: Duration(milliseconds: 200),textStyle:TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: "Antic"),curve: Curves.linear )
-                    ])
-                /*FittedBox(
-                    child: Text(
-                      "I’m Saurav Patel",
-                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-                    )),*/
+                Expanded(
+                  child: AnimatedTextKit(
+                      isRepeatingAnimation: false,
+                      animatedTexts: [
+                        TyperAnimatedText('I’m Saurav Patel',speed: Duration(milliseconds: 200),textStyle:TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: "Antic"),curve: Curves.linear )
+                      ]),
+                )
               ],
             )),
         ///designation..
@@ -157,20 +158,21 @@ class CustomeWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
+            spacing: 80,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               socialLinksBtn(socialImage: const AssetImage("assets/icons/linkedin-removebg-preview.png"), socialMediaName: "Linkedin",callback:(){
                 launchURL("https://www.linkedin.com/in/saurav-patel-783276294/");
               },),
-              const SizedBox(width: 80,),
+              //const SizedBox(width: 80,),
               socialLinksBtn(socialImage: const AssetImage("assets/icons/github-removebg-preview.png"), socialMediaName: "Github",callback: (){
                 launchURL("https://github.com/SauravPatel31");
                 print("Clicked on Github");
               }),
-              const SizedBox(width: 80,),
+             //            const SizedBox(width: 80,),
               socialLinksBtn(socialImage: const AssetImage("assets/icons/download-removebg-preview.png"), socialMediaName: "Resume",callback: (){
-                launchURL("https://drive.google.com/file/d/1sX0sL0qAx_QzQ-hb8zct8uzgQnBt0FPr/view?usp=drive_link");
-                print("Clicked on CV");
+                launchURL("https://drive.google.com/file/d/1LFKScG1_VqSfbXWyReSeh9A7iXrG2Jot/view?usp=drivesdk");
+               // print("Clicked on CV");
               }),
             ],
           ),
@@ -179,20 +181,23 @@ class CustomeWidget {
     );
   }
   ///my training details or experience..
-  Widget trainingDetails(){
+  Widget trainingDetails(context){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Flutter App Development Training",style: myTextStyle25(myFontweight: FontWeight.w900),),
         const SizedBox(height: 10,),
-        RichText(text: TextSpan(
+        RichText(
+            text: TextSpan(
+                style: TextStyle(color: Theme.of(context).brightness==Brightness.dark?Colors.white:Colors.black),
             children: [
-              TextSpan(text: "Compny: ",style:  myTextStyle18(myFontweight: FontWeight.bold)),
+              TextSpan(text: "Compny: ",style:  myTextStyle18(myFontweight: FontWeight.bold,)),
               TextSpan(text: "WsCube Tech",style: myTextStyle18(myFontweight: FontWeight.bold)),
             ]
         )),
         const SizedBox(height: 10,),
         RichText(text: TextSpan(
+          style: TextStyle(color: Theme.of(context).brightness==Brightness.dark?Colors.white:Colors.black),
             children: [
               TextSpan(text: "Duration: ",style: myTextStyle18(myFontweight: FontWeight.bold)),
               TextSpan(text: "June 2024 - November 2024",style: myTextStyle18(myFontweight: FontWeight.bold)),
@@ -202,7 +207,21 @@ class CustomeWidget {
         const Text("I successfully completed a 5-month training program in Flutter app development at WsCube Tech. During this training, I gained hands-on experience in developing mobile applications using the Flutter framework and Dart programming language.",textAlign: TextAlign.justify,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
         const SizedBox(height: 10,),
         Text("Address: ",style: myTextStyle18(myFontweight: FontWeight.bold),),
-        const Text("First Floor, Laxmi Tower, BhaskarCir, Ratanada, Jodhpur, Rajasthan,342001",style: TextStyle(fontSize: 16,),),
+        InkWell(
+          mouseCursor:MouseCursor.uncontrolled,
+            onTap: (){
+              launchURL("https://www.google.com/maps/place/WsCube+Tech+-+Upskilling+Bharat/@26.2735497,73.0303207,102m/data=!3m2!1e3!5s0x39418c5b1e9925c9:0xcf84a8ec02f6bb28!4m14!1m7!3m6!1s0x39418c37b277d1c3:0x1412272be9646840!2sWsCube+Tech+-+Upskilling+Bharat!8m2!3d26.27359!4d73.030495!16s%2Fg%2F1tf9lnfx!3m5!1s0x39418c37b277d1c3:0x1412272be9646840!8m2!3d26.27359!4d73.030495!16s%2Fg%2F1tf9lnfx?entry=ttu&g_ep=EgoyMDI1MDEyMC4wIKXMDSoASAFQAw%3D%3D");
+            },
+            child:Row(
+              children: [
+                Icon(Icons.location_on,color: Colors.red,),
+                 Expanded(child: Text("First Floor, Laxmi Tower, BhaskarCir, Ratanada, Jodhpur, Rajasthan,342001",style: TextStyle(fontSize: 16,),))
+
+              ],
+            ),
+
+
+        ),
         const SizedBox(height: 10,),
         Text("Contact:",style: myTextStyle18(myFontweight: FontWeight.bold),),
         const Text("+91 9257209053, +91 9257155617,+91 8000455617 ",style: TextStyle(fontSize: 16,),),
@@ -284,7 +303,7 @@ class CustomeWidget {
                   isReverse: true,
 
                   transitionType: TransitionType.CENTER_ROUNDER,
-                  textStyle: myTextStyle15(myFontweight: FontWeight.bold,color: Colors.white),
+                  textStyle: myTextStyle15(myFontweight: FontWeight.bold),
                 ),
               )
 
@@ -315,6 +334,54 @@ class CustomeWidget {
           Text(socialMediaName,style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold,fontFamily: "Antic"),)
         ],
       ),
+    );
+  }
+
+  /// Footer Widget
+  Widget buildFooter() {
+    return Column(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.email),
+          title: const Text("sauravp3103@gmail.com"),
+          onTap: () async {
+            final Uri emailUri = Uri(
+              scheme: 'mailto',
+              path: 'sauravp3103@gmail.com',
+            );
+            if (await canLaunchUrl(emailUri)) {
+              await launchUrl(emailUri);
+            }
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.phone),
+          title: const Text("+91 6351280218"),
+          onTap: () async {
+            final Uri phoneUri = Uri(
+              scheme: 'tel',
+              path: '+91 6351280218',
+            );
+            if (await canLaunchUrl(phoneUri)) {
+              await launchUrl(phoneUri);
+            }
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.location_on),
+          title: const Text("Mahesana,Vadnagar,Gujarat, India"),
+          onTap: ()  {
+            launchURL("https://maps.app.goo.gl/5cSd5TKkmKJAhAq8A");
+          /*  final Uri addressUri = Uri(
+              scheme: 'geo',
+              path: 'https://maps.app.goo.gl/5cSd5TKkmKJAhAq8A',
+            );
+            if (await canLaunchUrl(addressUri)) {
+              await launchUrl(addressUri);
+            }*/
+          },
+        ),
+      ],
     );
   }
 

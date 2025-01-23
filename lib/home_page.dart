@@ -1,16 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/theme_provider.dart';
 
 import 'package:portfolio/utils/custome_widget.dart';
 import 'package:portfolio/utils/projects_page.dart';
 import 'package:portfolio/utils/styling.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() =>HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeInAnimation;
 
@@ -36,14 +38,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    bool isValue =context.watch<ThemeProvider>().getThemeValue();
+    bool isDark =Theme.of(context).brightness==Brightness.dark;
     return Scaffold(
-        //backgroundColor:Colors.black,
-      backgroundColor: Color(0xffFDFDFD),
+      backgroundColor: isDark?Colors.black:Color(0xfff5f3f4),
+      appBar: AppBar(
+        backgroundColor: isDark?Colors.black:Color(0xfff5f3f4),
+        actions: [
+        IconButton(
+      tooltip: isValue?"Dark Mode":"Light Mode",
+          onPressed: ()async{
+            context.read<ThemeProvider>().changeThemeValue(newValue: isValue=!isValue);
+          }, icon: Icon(isDark? Icons.light_mode:Icons.dark_mode))
+        ],
+      ),
       body: MediaQuery.of(context).orientation == Orientation.landscape ? _buildLandscapeLayout() : _buildPortraitLayout(),
-
     );
   }
-
   /// Landscape layout
   Widget _buildLandscapeLayout() {
     return Padding(
@@ -61,7 +72,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   /// Details
                   Expanded(
                     flex: 2,
-                    child: CustomeWidget().details(),
+                    child: CustomWidget().details(context),
                   ),
                   /// Profile image
                   Expanded(
@@ -97,24 +108,28 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
                   ),
-                  items: CustomeWidget().imageList,
+                  items: CustomWidget().imageList,
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 flex: 2,
-                child: CustomeWidget().trainingDetails(),
+                child: CustomWidget().trainingDetails(context),
               ),
             ],
           ),
           const SizedBox(height: 18),
           /// Skills Section
           _buildSectionHeader("Skills"),
-          CustomeWidget().skillsDetails(),
+          CustomWidget().skillsDetails(),
           const SizedBox(height: 18),
           /// Projects Section
           _buildSectionHeader("Projects"),
           ProjectCardWidget(context: context),
+          const SizedBox(height: 18),
+          _buildSectionHeader("Get In Touch"),
+          SizedBox(height: 10,),
+          CustomWidget().buildFooter()
         ],
       ),
     );
@@ -123,7 +138,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   /// Portrait Layout
   Widget _buildPortraitLayout() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       child: ListView(
         children: [
           /// Profile image
@@ -139,14 +154,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
             ),
           ),
-          CustomeWidget().details(),
+          CustomWidget().details(context),
           const SizedBox(height: 40),
           /// Training Section
           _buildSectionHeader("Training"),
           const SizedBox(height: 10),
           Column(
             children: [
-              CustomeWidget().trainingDetails(),
+              CustomWidget().trainingDetails(context),
               CarouselSlider(
                 options: CarouselOptions(
                   height: 300,
@@ -154,24 +169,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 3),
                 ),
-                items: CustomeWidget().imageList,
+                items: CustomWidget().imageList,
               ),
             ],
           ),
           const SizedBox(height: 18),
           /// Skills Section
           _buildSectionHeader("Skills"),
-          CustomeWidget().skillsDetails(),
+          CustomWidget().skillsDetails(),
           const SizedBox(height: 18),
           /// Projects Section
           _buildSectionHeader("Projects"),
           ProjectCardWidget(context: context),
+          const SizedBox(height: 18),
+          _buildSectionHeader("Get In Touch"),
+          SizedBox(height: 10,),
+          CustomWidget().buildFooter()
         ],
       ),
     );
   }
-
-  ///Animation
+  ///Title Animation
   Widget _buildSectionHeader(String title) {
     return SlideTransition(
       position: Tween<Offset>(

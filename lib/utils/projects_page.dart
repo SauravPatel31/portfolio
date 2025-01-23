@@ -24,7 +24,7 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
   @override
   Widget build(BuildContext context) {
     // Determine visible projects
-    final List<Map<String, dynamic>> visibleProjects = showAllProjects ? CustomeWidget().projects : CustomeWidget().projects.take(4).toList(); // Initially display only 3 cards
+    final List<Map<String, dynamic>> visibleProjects = showAllProjects ? CustomWidget().projects : CustomWidget().projects.take(4).toList(); // Initially display only 3 cards
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +47,7 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
                 shadowColor:eachProject['color'],
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:Theme.of(context).brightness==Brightness.dark?Colors.black: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -87,7 +87,7 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: InkWell(
                           onTap:(){
-                            CustomeWidget().launchURL(eachProject['projectLink']);
+                            CustomWidget().launchURL(eachProject['projectLink']);
                           },
                           child: Container(
                             padding: const EdgeInsets.all(10),
@@ -108,7 +108,7 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
                               spacing:10,
                               children: [
                                 Image(image: AssetImage("assets/icons/github-removebg-preview.png"),height: 25,width: 25,),
-                                Text("GitHub",style: myTextStyle15(color: Colors.white,myFontweight: FontWeight.bold),),
+                                Text("GitHub",style: myTextStyle15(myFontweight: FontWeight.bold),),
                               ],
                             ),
                           ),
@@ -122,19 +122,14 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
           ),
         ),
         const SizedBox(height: 16),
-        if (!showAllProjects && CustomeWidget().projects.length > 3) // Show button only if more projects exist
+        if (!showAllProjects && CustomWidget().projects.length > 3) // Show button only if more projects exist
           TextButton(
             onPressed: () {
               setState(() {
                 showAllProjects = true; // Trigger animation to expand
               });
             },
-            child: Text(
-              'Show More',
-              style: myTextStyle15(
-
-                myFontweight: FontWeight.bold,
-              ),
+            child: Text('Show More',style: myTextStyle15(myFontweight: FontWeight.bold,),
             ),
           ),
       ],
