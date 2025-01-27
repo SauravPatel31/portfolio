@@ -58,7 +58,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   /// Landscape layout
   Widget _buildLandscapeLayout() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:12 ),
+      padding: const EdgeInsets.symmetric(horizontal:18),
       child: ListView(
         children: [
           /// Profile image and details
@@ -76,12 +76,12 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
                   ),
                   /// Profile image
                   Expanded(
-                    flex: 1,
                     child: AnimatedContainer(
-                      duration: const Duration(seconds: 1),
+                      duration: const Duration(milliseconds: 850),
                       curve: Curves.easeInOut,
-                      height: MediaQuery.of(context).size.height * 0.7,
+                      height: MediaQuery.of(context).size.height * 0.55,
                       decoration: const BoxDecoration(
+                       // color: Colors.deepPurple,
                         image: DecorationImage(
                           image: AssetImage("assets/image/me.png"),
                           fit: BoxFit.contain,
@@ -100,7 +100,6 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
           Row(
             children: [
               Expanded(
-                flex: 1,
                 child: CarouselSlider(
                   options: CarouselOptions(
                     height: 300,
@@ -138,7 +137,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   /// Portrait Layout
   Widget _buildPortraitLayout() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
       child: ListView(
         children: [
           /// Profile image

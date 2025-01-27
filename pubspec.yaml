@@ -44,6 +44,7 @@ dependencies:
   avatar_glow:
   lottie:
   provider: ^6.1.2
+  firebase_core:
 
 dev_dependencies:
   flutter_test:

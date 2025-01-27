@@ -53,14 +53,17 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
                   child: Column(
                     children: [
                       ///Project Image
-                      ClipRRect(
-                        borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(10)),
-                        child: Image(
-                          image: AssetImage(eachProject['projectImage']),
-                          height: MediaQuery.of(context).size.height * 0.28,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                      Expanded(
+                        flex:3,
+                        child: ClipRRect(
+                          borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(10)),
+                          child: Image(
+                            image: AssetImage(eachProject['projectImage']),
+                            height: MediaQuery.of(context).size.height * 0.28,
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                       ///Project Name
@@ -68,17 +71,19 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           eachProject['projectName'],
-                          style: myTextStyle18(myFontweight: FontWeight.bold),
+                          style: myTextStyle20(myFontweight: FontWeight.bold),
                         ),
                       ),
                       ///Project Description
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          eachProject['projectDescription'],
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          style: myTextStyle15(myFontweight: FontWeight.normal),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            eachProject['projectDescription'],
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: myTextStyle15(myFontweight: FontWeight.normal),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -101,19 +106,22 @@ class _ProjectCardWidgetState extends State<ProjectCardWidget>
                                   blurRadius: 5,)
                               ],
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomRight: Radius.circular(15))
-
+                  
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              spacing:10,
-                              children: [
-                                Image(image: AssetImage("assets/icons/github-removebg-preview.png"),height: 25,width: 25,),
-                                Text("GitHub",style: myTextStyle15(myFontweight: FontWeight.bold),),
-                              ],
+                            child: SingleChildScrollView(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                spacing:10,
+                                children: [
+                                  Image(image: AssetImage("assets/icons/github-removebg-preview.png"),height: 25,width: 25,),
+                                  Text("GitHub",style: myTextStyle15(myFontweight: FontWeight.bold),),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

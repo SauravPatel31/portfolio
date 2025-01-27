@@ -23,6 +23,13 @@ TextStyle myTextStyle18({FontWeight myFontweight = FontWeight.normal}){
       fontFamily: "Antic"
   );
 }
+TextStyle myTextStyle20({FontWeight myFontweight = FontWeight.normal}){
+  return TextStyle(
+      fontSize: 20,
+      fontWeight: myFontweight,
+      fontFamily: "Antic"
+  );
+}
 TextStyle myTextStyle25({FontWeight myFontweight = FontWeight.normal}){
   return TextStyle(
       fontSize: 25,

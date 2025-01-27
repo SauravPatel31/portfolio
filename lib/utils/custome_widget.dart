@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import 'package:portfolio/utils/styling.dart';
@@ -21,8 +22,8 @@ class CustomWidget {
   }
   List<Widget> imageList = [
     const Image(image: AssetImage("assets/image/c.jpg"),width: double.infinity,fit: BoxFit.contain,),
-    const Image(image: AssetImage("assets/image/b.jpg"),width: double.infinity,fit: BoxFit.contain,),
-    const Image(image: AssetImage("assets/image/a.jpg"),width: double.infinity,fit: BoxFit.contain,),
+    const Image(image: AssetImage("assets/image/b.jpg"),width: double.infinity,fit: BoxFit.cover,),
+    const Image(image: AssetImage("assets/image/a.jpg"),width: double.infinity,fit: BoxFit.cover,),
   ];
   List<Map<String,dynamic>> skills=[
     {
@@ -155,27 +156,23 @@ class CustomWidget {
             ]),
         SizedBox(height: 30,),
         ///social links..
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            spacing: 80,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              socialLinksBtn(socialImage: const AssetImage("assets/icons/linkedin-removebg-preview.png"), socialMediaName: "Linkedin",callback:(){
-                launchURL("https://www.linkedin.com/in/saurav-patel-783276294/");
-              },),
-              //const SizedBox(width: 80,),
-              socialLinksBtn(socialImage: const AssetImage("assets/icons/github-removebg-preview.png"), socialMediaName: "Github",callback: (){
-                launchURL("https://github.com/SauravPatel31");
-                print("Clicked on Github");
-              }),
-             //            const SizedBox(width: 80,),
-              socialLinksBtn(socialImage: const AssetImage("assets/icons/download-removebg-preview.png"), socialMediaName: "Resume",callback: (){
-                launchURL("https://drive.google.com/file/d/1LFKScG1_VqSfbXWyReSeh9A7iXrG2Jot/view?usp=drivesdk");
-               // print("Clicked on CV");
-              }),
-            ],
-          ),
+        Wrap(
+          spacing: 50,
+          children: [
+            socialLinksBtn(socialImage: const AssetImage("assets/icons/linkedin-removebg-preview.png"), socialMediaName: "Linkedin",callback:(){
+              launchURL("https://www.linkedin.com/in/saurav-patel-783276294/");
+            },),
+            //const SizedBox(width: 80,),
+            socialLinksBtn(socialImage: const AssetImage("assets/icons/github-removebg-preview.png"), socialMediaName: "Github",callback: (){
+              launchURL("https://github.com/SauravPatel31");
+              print("Clicked on Github");
+            }),
+           //            const SizedBox(width: 80,),
+            socialLinksBtn(socialImage: const AssetImage("assets/icons/download-removebg-preview.png"), socialMediaName: "Resume",callback: (){
+              launchURL("https://drive.google.com/file/d/1LFKScG1_VqSfbXWyReSeh9A7iXrG2Jot/view?usp=drivesdk");
+             // print("Clicked on CV");
+            }),
+          ],
         )
       ],
     );
@@ -286,22 +283,19 @@ class CustomWidget {
               ),
               const SizedBox(height: 10,),
               Card(
-                elevation: 12,
-                color: Colors.deepPurple,
+                elevation: 15,
+                color: eachProject['color'],
                 child: AnimatedButton(
-
                   animationDuration: Duration(seconds: 1),
                   onPress: (){
                     launchURL(eachProject['projectLink']);
                   },
                   height: 45,
                   text: 'Show Project',
-
                   selectedTextColor: Colors.black,
                   backgroundColor: Colors.black,
                   animatedOn: AnimatedOn.onHover,
                   isReverse: true,
-
                   transitionType: TransitionType.CENTER_ROUNDER,
                   textStyle: myTextStyle15(myFontweight: FontWeight.bold),
                 ),
@@ -327,10 +321,12 @@ class CustomWidget {
             curve: Curves.bounceOut,
             duration: Duration(seconds: 4),
             child: CircleAvatar(
+              backgroundColor: Colors.white,
               radius: 25,
               backgroundImage:socialImage ,
             ),
           ),
+          SizedBox(height: 10,),
           Text(socialMediaName,style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold,fontFamily: "Antic"),)
         ],
       ),
@@ -384,6 +380,4 @@ class CustomWidget {
       ],
     );
   }
-
-
 }
